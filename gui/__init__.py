@@ -1,10 +1,11 @@
 from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit
 
+
 class UI(QWidget):
     def __init__(self):
         super().__init__()
         self.show_main()
-    
+
     def show_main(self):
         layout = QVBoxLayout()
         boxes = ['company', 'image', 'description', 'name', 'apply']
@@ -23,6 +24,7 @@ class UI(QWidget):
 
     def send(self):
         pass
+
 
 def generate_app():
     return QApplication([])
