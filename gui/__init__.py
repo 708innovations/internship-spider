@@ -1,9 +1,11 @@
-from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget, QLineEdit
+from data import send
+from PySide6.QtWidgets import QApplication, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget, QLineEdit
 
 
 class UI(QWidget):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle('Internship Spider (Interactive Mode)')
         self.show_main()
 
     def show_main(self):
@@ -23,7 +25,18 @@ class UI(QWidget):
         self.setLayout(layout)
 
     def send(self):
-        pass
+        data = dict()
+        for box in self.boxes:
+            data[box] = self.boxes[box].text()
+        if not send(**data):
+            self.show_failure()
+
+    def show_failure(self):
+        alert = QMessageBox()
+        alert.setWindowTitle('Failure to send!')
+        alert.setText(
+            'Something went wrong while trying to send. Most likely you provided a bad URL or your internet connection is down.')
+        alert.exec_()
 
 
 def generate_app():
