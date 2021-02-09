@@ -1,2 +1,3 @@
-# internship-spider
-Post an internship to Discord via GUI
+# Internship Spider
+
+Work in progress by Gideon Tong
