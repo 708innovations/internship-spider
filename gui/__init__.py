@@ -40,7 +40,12 @@ class UI(QWidget):
             self.show_failure()
 
     def queue(self):
+        data = dict()
+        for box in self.boxes:
+            data[box] = self.boxes[box].text()
+            self.boxes[box].clear()
         sleep(randint(5, 90))
+        send(**data)
         self.send()
 
     def show_failure(self):
