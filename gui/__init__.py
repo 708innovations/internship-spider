@@ -1,5 +1,7 @@
 from data import send
-from PySide6.QtWidgets import QApplication, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget, QLineEdit
+from time import sleep
+from random import randint
+from PySide6.QtWidgets import QApplication, QHBoxLayout, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget, QLineEdit
 
 
 class UI(QWidget):
@@ -19,8 +21,11 @@ class UI(QWidget):
             self.boxes[box] = QLineEdit()
             layout.addWidget(self.labels[box])
             layout.addWidget(self.boxes[box])
+        queue = QPushButton('Queue')
         activate = QPushButton('Send')
         activate.clicked.connect(self.send)
+        queue.clicked.connect(self.queue)
+        layout.addWidget(queue)
         layout.addWidget(activate)
         self.setLayout(layout)
 
@@ -33,6 +38,10 @@ class UI(QWidget):
                 self.boxes[box].clear()
         else:
             self.show_failure()
+
+    def queue(self):
+        sleep(randint(5, 90))
+        self.send()
 
     def show_failure(self):
         alert = QMessageBox()
