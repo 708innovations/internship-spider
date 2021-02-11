@@ -46,7 +46,7 @@ class UI(QWidget):
             self.boxes[box].clear()
         timer = randint(5, 90)
         print(f'Sleeping for {timer}s to post {data["company"]}')
-        sleep(randint(5, 90))
+        sleep(timer)
         send(**data)
         self.send()
 
