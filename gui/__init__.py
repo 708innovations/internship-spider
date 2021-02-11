@@ -28,7 +28,10 @@ class UI(QWidget):
         data = dict()
         for box in self.boxes:
             data[box] = self.boxes[box].text()
-        if not send(**data):
+        if send(**data):
+            for box in self.boxes:
+                self.boxes[box].clear()
+        else:
             self.show_failure()
 
     def show_failure(self):
