@@ -1,8 +1,17 @@
 from data import send
-from time import sleep
+from PySide6.QtCore import QThread
+from PySide6.QtWidgets import QApplication, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget, QLineEdit
 from random import randint
-from PySide6.QtWidgets import QApplication, QHBoxLayout, QLabel, QMessageBox, QPushButton, QVBoxLayout, QWidget, QLineEdit
+from time import sleep
 
+
+class Worker(QThread):
+    def __init__(self, data: dict):
+        QThread.__init__(self)
+        self.data = data
+
+    def run(self):
+        send(**self.data)
 
 class UI(QWidget):
     def __init__(self):
@@ -24,7 +33,7 @@ class UI(QWidget):
         queue = QPushButton('Queue')
         activate = QPushButton('Send')
         activate.clicked.connect(self.send)
-        queue.clicked.connect(self.queue)
+        queue.clicked.connect(self.start_queue)
         layout.addWidget(queue)
         layout.addWidget(activate)
         self.setLayout(layout)
@@ -39,16 +48,20 @@ class UI(QWidget):
         else:
             self.show_failure()
 
-    def queue(self):
+    def start_queue(self):
         data = dict()
         for box in self.boxes:
             data[box] = self.boxes[box].text()
             self.boxes[box].clear()
+        thread = Worker(data)
+        # thread.started.connect(self.queue)
         timer = randint(5, 90)
         print(f'Sleeping for {timer}s to post {data["company"]}')
-        sleep(timer)
+        thread.sleep(timer)
+        thread.start()
+
+    def queue(self, data: dict):
         send(**data)
-        self.send()
 
     def show_failure(self):
         alert = QMessageBox()
