@@ -1,5 +1,5 @@
-﻿autopep8==1.5.5
-certifi==2022.12.7
+autopep8==1.5.5
+certifi==2023.7.22
 chardet==4.0.0
 idna==2.10
 pycodestyle==2.6.0
